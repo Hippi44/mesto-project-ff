@@ -28,11 +28,16 @@ const addCardForm = document.forms['new-place'];
 const cardNameInput = addCardForm.querySelector('.popup__input_type_card-name');
 const cardLinkInput = addCardForm.querySelector('.popup__input_type_url');
 
+const popupImage = document.querySelector('.popup_type_image');
+const popupImageElement = popupImage.querySelector('.popup__image');
+const popupCaption = popupImage.querySelector('.popup__caption');
+
 // @todo: Вывести карточки на страницу
 initialCards.forEach(function(cardArg) {
-  const newCard = createCard(cardArg, deleteCard, handleLike);
+  const newCard = createCard(cardArg, deleteCard, handleLike, handleImageClick);
   cardsContainer.append(newCard);
-})
+});
+
 
 // Открытие попапа при клике на иконку редактирования
 editButton.addEventListener('click', () => {
@@ -63,7 +68,7 @@ allPopups.forEach((popup) => {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
 
       const newName = nameInput.value;
@@ -74,9 +79,16 @@ function handleFormSubmit(evt) {
   closePopup(popupEdit);
 }
 
+function handleImageClick(name, link) {
+  popupImageElement.src = link;
+  popupImageElement.alt = name;
+  popupCaption.textContent = name;
+  openPopup(popupImage);
+}
+
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleFormSubmit);
+formElement.addEventListener('submit', handleProfileFormSubmit);
 
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
